@@ -70,7 +70,7 @@
                             <div class="product-info">
                                 <a href="{{route('product.productdetatilscomponent',['slug'=>$product->slug])}}" class="product-name"><span>{{$product->name}}</span></a>
                                 <div class="wrap-price"><span class="product-price">${{$product->regular_price}}</span></div>
-                                <a href="#" class="btn add-to-cart">Add To Cart</a>
+                                <a href="#" class="btn add-to-cart" wire:click.prevent="store({{$product->id}},'{{$product->name}}',{{$product->regular_price}})">Add To Cart</a>
                             </div>
                         </div>
                     </li>
@@ -80,6 +80,7 @@
             </div>
 
             <div class="wrap-pagination-info">
+                {{$products->links()}}
                 <ul class="page-numbers">
                     <li><span class="page-number-item current" >1</span></li>
                     <li><a class="page-number-item" href="#" >2</a></li>
