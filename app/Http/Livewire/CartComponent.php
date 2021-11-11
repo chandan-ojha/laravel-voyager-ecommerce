@@ -42,3 +42,4 @@ class CartComponent extends Component
         return view('livewire.cart-component')->layout('layouts.base');
     }
 }
+
