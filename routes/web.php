@@ -33,7 +33,7 @@ Route::get('/shop',ShopComponent::class);
 
 Route::get('/cart',CartComponent::class)->name('product.cart');
 
-Route::get('/checkout',CheckoutComponent::class);
+Route::get('/checkout', CheckoutComponent::class)->name('checkout');
 
 Route::get('/product/{slug}',ProductDetailsComponent::class)->name('product.productdetatilscomponent');
 
