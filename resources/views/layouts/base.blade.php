@@ -70,9 +70,28 @@
 									</ul>
 								</li>
                                 
-								@if (auth()->check())
+								<!-- Login and Registration -->
+								@if(Route::has('login'))
+								@auth
+								@if(Auth::user()->role_id === 1)
 								<li class="menu-item menu-item-has-children parent">
-									<a title="My Account" href="">({{Auth::user()->name}})<i class="fa fa-angle-down" aria-hidden="true"></i></a>
+									<a title="My Account" href="">{{Auth::user()->name}}<i class="fa fa-angle-down" aria-hidden="true"></i></a>
+									<ul class="submenu curency">
+										<li class="menu-item">
+											<a title="Dashboard" href="/admin" target="_blank">Admin Panel</a>
+										</li>
+
+										<li class="menu-item">
+											<a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+										</li>
+										<form id="logout-form" method="POST" action="{{ route('logout') }}">
+											@csrf
+										</form>
+									</ul>
+								</li>
+								@else
+								<li class="menu-item menu-item-has-children parent">
+									<a title="My Account" href="">{{Auth::user()->name}}<i class="fa fa-angle-down" aria-hidden="true"></i></a>
 									<ul class="submenu curency">
 										<li class="menu-item">
 											<a title="Dashboard" href="{{ route('user.dashboard') }}">Dashboard</a>
@@ -91,9 +110,11 @@
 										</form>
 									</ul>
 								</li>
-                                @else
+								@endif
+								@else
 								<li class="menu-item"><a title="Register or Login" href="{{route('login')}}">Login</a></li>
 								<li class="menu-item"><a title="Register or Login" href="{{route('register')}}">Register</a></li>
+								@endif
 								@endif
 							</ul>
 						</div>
