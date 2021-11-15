@@ -7,6 +7,7 @@ use Livewire\Component;
 use Cart;
 use Livewire\WithPagination;
 use App\Models\Category;
+use Illuminate\Support\Facades\Auth;
 
 class ShopComponent extends Component
 {
@@ -72,6 +73,11 @@ class ShopComponent extends Component
 
         $popular_products = Product::inRandomOrder()->limit(4)->get();
         $categories = Category::all();
+
+        if (Auth::check()) {
+            Cart::instance('cart')->store(Auth::user()->email);
+            Cart::instance('wishlist')->store(Auth::user()->email);
+        }
 
         return view('livewire.shop-component',['products'=>$products, 'categories' => $categories, 'popular_products' => $popular_products])->layout('layouts.base');
     }
