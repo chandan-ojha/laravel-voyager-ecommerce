@@ -97,7 +97,7 @@
 											<a title="Dashboard" href="{{ route('user.dashboard') }}">Dashboard</a>
 										</li>
 										<li class="menu-item">
-											<a title="My Orders" href="#">My Orders</a>
+											<a title="My Orders" href="{{ route('user.orders') }}">My Orders</a>
 										</li>
 										<li class="menu-item">
 											<a title="Change Password" href="#">Change Password</a>
