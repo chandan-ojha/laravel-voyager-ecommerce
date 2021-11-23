@@ -30,7 +30,7 @@ class TodaySales extends AbstractWidget
         $string = 'Today Sales';
 
         return view('voyager::dimmer', array_merge($this->config, [
-            'icon'   => 'voyager-basket',
+            'icon'   => 'voyager-bag',
             'title'  => "{$string} {$todaySales}",
             'text'   => __('', ['count' => $todaySales, 'string' => Str::lower($string)]),
             'button' => [
