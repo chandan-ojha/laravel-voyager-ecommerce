@@ -7,18 +7,28 @@ use Livewire\Component;
 use Cart;
 use Livewire\WithPagination;
 use App\Models\Category;
+use App\Models\Subcategory;
 
 class CategoryComponent extends Component
 {
     public $sorting;
     public $pagesize;
     public $category_slug;
+    public $scategory_slug;
 
-    public function mount($category_slug)
+    public $min_price;
+    public $max_price;
+
+
+    public function mount($category_slug,$scategory_slug=null)
     {
         $this->sorting = "default";
         $this->pagesize = 12;
         $this->category_slug =$category_slug;
+        $this->scategory_slug =$scategory_slug;
+
+        $this->min_price = 1;
+        $this->max_price = 1000;
     }
 
     public function store($product_id, $product_name, $product_price)
@@ -31,31 +41,48 @@ class CategoryComponent extends Component
     use WithPagination;
     public function render()
     {
-        $category = Category::where('slug',$this->category_slug)->first();
-        $category_id = $category->id;
-        $category_name = $category->name;
+        $category_id = null;
+        $category_name = "";
+        $filter = "";
 
+        if($this->scategory_slug)
+        {
+            $scategory = Subcategory::where('slug',$this->scategory_slug)->first();
+            $category_id = $scategory->id;
+            $category_name = $scategory->name;
+            $filter = "sub";
+        }
+        else
+        {
+            $category = Category::where('slug',$this->category_slug)->first();
+            $category_id = $category->id;
+            $category_name = $category->name;
+            $filter = "";
+        }
+
+        //Product Sorting
         if($this->sorting=='date')
         {
-          $products = Product::where('category_id',$category_id)->orderBy('created_at','DESC')->paginate($this->pagesize);
+          $products = Product::where($filter.'category_id',$category_id)->orderBy('created_at','DESC')->paginate($this->pagesize);
         }
 
         else if($this->sorting=="price")
         {
-         $products = Product::where('category_id',$category_id)->orderBy('regular_price','ASC')->paginate($this->pagesize);   
+         $products = Product::where($filter.'category_id',$category_id)->orderBy('regular_price','ASC')->paginate($this->pagesize);   
         }
 
         else if($this->sorting=="price-desc")
         {
-          $products = Product::where('category_id',$category_id)->orderBy('regular_price','DESC')->paginate($this->pagesize);  
+          $products = Product::where($filter.'category_id',$category_id)->orderBy('regular_price','DESC')->paginate($this->pagesize);  
         }
         else
         {
-            $products = Product::where('category_id',$category_id)->paginate($this->pagesize); 
+            $products = Product::where($filter.'category_id',$category_id)->paginate($this->pagesize); 
         }
 
+        $popular_products = Product::inRandomOrder()->limit(4)->get();
         $categories = Category::all();
       
-        return view('livewire.category-component', ['products' => $products,'categories'=>$categories,'category_name'=>$category_name])->layout("layouts.base");
+        return view('livewire.category-component', ['products' => $products,'categories'=>$categories,'category_name'=>$category_name,'popular_products' => $popular_products])->layout("layouts.base");
     }
 }
