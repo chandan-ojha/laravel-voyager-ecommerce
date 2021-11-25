@@ -21,12 +21,22 @@
         <div class="col-lg-9 col-md-8 col-sm-8 col-xs-12 main-content-area">
             <div class="wrap-product-detail">
                 <div class="detail-media">
-                    <div class="product-gallery">
+                    <div class="product-gallery" wire:ignore>
                       <ul class="slides">
 
                         <li data-thumb="{{ Voyager::image( $product->image) }}">
                             <img src="{{ Voyager::image( $product->image) }}" alt="{{$product->name}}" />
                         </li>
+                        {{-- @php
+                          $images = json_decode($product->images);
+                        @endphp
+                        @foreach($images as $image)
+                           @if($image)
+                             <li data-thumb="{{ Voyager::image( $product->image) }}">
+                                <img src="{{ Voyager::image( $product->image) }}" alt="{{$product->name}}" />
+                             </li>
+                           @endif
+                        @endforeach --}}
 
                       </ul>
                     </div>
