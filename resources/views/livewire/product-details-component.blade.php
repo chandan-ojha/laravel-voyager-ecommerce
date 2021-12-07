@@ -108,7 +108,7 @@
                 <div class="advance-info">
                     <div class="tab-control normal">
                         <a href="#description" class="tab-control-item active">description</a>
-                        <a href="#add_infomation" class="tab-control-item">Addtional Infomation</a>
+                        <!-- <a href="#add_infomation" class="tab-control-item">Addtional Infomation</a> -->
                         <a href="#review" class="tab-control-item">Reviews</a>
                     </div>
                     <div class="tab-contents">
@@ -164,7 +164,7 @@
                                         @foreach($product->orderItems->where('rstatus',1) as $orderItem)
                                         <li class="comment byuser comment-author-admin bypostauthor even thread-even depth-1" id="li-comment-20">
                                             <div id="comment-20" class="comment_container"> 
-                                                <img alt="" src="{{ asset('assets/images/author-avata.jpg') }}" height="80" width="80">
+                                                <img alt="{{$orderItem->order->user->name}}" src="{{ Voyager::image( $orderItem->order->user->avatar) }}" height="80" width="80">
                                                 <div class="comment-text">
                                                     <div class="star-rating">
                                                         <span class="width-{{$orderItem->review->rating * 20}}-percent">Rated <strong class="rating">{{$orderItem->review->rating}}</strong> out of 5</span>
